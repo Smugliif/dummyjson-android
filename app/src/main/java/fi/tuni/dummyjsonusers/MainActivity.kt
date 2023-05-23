@@ -107,7 +107,7 @@ fun Header() {
             text = "Users",
             fontSize = 30.sp,
             textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.CenterHorizontally).padding(all = 20.dp)
         )
     }
 }
