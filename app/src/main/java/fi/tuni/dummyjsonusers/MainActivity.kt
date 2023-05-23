@@ -1,37 +1,22 @@
 package fi.tuni.dummyjsonusers
 
-import android.graphics.Color
 import androidx.compose.runtime.Composable
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavType
-import androidx.navigation.Navigator
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import fi.tuni.dummyjsonusers.ui.theme.DummyJSONUsersTheme
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.launch
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -79,82 +64,9 @@ fun MyNavigation() {
                 UserView(user)
             } //TODO Error handling
         }
-    }
-}
+        composable("addUser") {
 
-@Composable
-fun UserScreen(users: List<User>?, navController: NavController) {
-    Surface(
-        color = MaterialTheme.colors.background
-    ) {
-        if (users != null) {
-            Column() {
-                Header()
-                UserList(users, navController)
-            }
-        } else {
-            LoadingScreen()
         }
-    }
-}
-
-@Composable
-fun Header() {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = "Users",
-            fontSize = 30.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.CenterHorizontally).padding(all = 20.dp)
-        )
-    }
-}
-
-data class User(
-    val id: Int,
-    val firstName: String,
-    val lastName: String
-)
-
-@Composable
-fun UserCard(user: User, navController: NavController) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(15.dp)
-            .clickable { navController.navigate("userView/${user.id}") },
-        elevation = 10.dp
-    ) {
-        Column(
-            modifier = Modifier.padding(15.dp)
-        ) {
-            Text("${user.firstName} ${user.lastName}")
-        }
-    }
-}
-
-@Composable
-fun UserList(users: List<User>, navController: NavController) {
-    LazyColumn {
-        items(users) { user ->
-            UserCard(user, navController)
-        }
-    }
-}
-
-@Composable
-fun UserView(user: User) {
-    Column() {
-        Text(text = "Name: ${user.firstName}")
-    }
-}
-
-@Composable
-fun LoadingScreen() {
-    Column(Modifier.fillMaxSize()) {
-        CircularProgressIndicator()
     }
 }
 
