@@ -1,6 +1,6 @@
 package fi.tuni.dummyjsonusers
 
-import androidx.compose.runtime.Composable
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -17,9 +17,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import fi.tuni.dummyjsonusers.ui.theme.DummyJSONUsersTheme
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,8 +68,8 @@ fun MyNavigation() {
                 UserView(user)
             } //TODO Error handling
         }
-        composable("addUser") {
-
+        composable("addUserScreen") {
+            AddUserScreen()
         }
     }
 }
@@ -89,7 +93,7 @@ suspend fun fetchUsers(): List<User>? {
         @Override
         override fun onResponse(call: Call, response: Response) {
             if (!response.isSuccessful) {
-                Log.d("DEBUG","Something went wrong")
+                Log.d("DEBUG", response.message)
                 deferred.complete(null)
                 return
             }
@@ -115,6 +119,42 @@ suspend fun fetchUsers(): List<User>? {
     })
 
     return deferred.await()
+}
+
+fun postUser() {
+    val url = "https://dummyjson.com/users/add"
+    // Create an OkHttpClient instance
+    val client = OkHttpClient()
+
+    // Create a request body with the data to be sent
+    val requestBody = FormBody.Builder()
+        .add("firstName", "value1")
+        .add("lastName", "value2")
+        .build()
+
+    // Create a POST request with the desired URL and request body
+    val request = Request.Builder()
+        .url(url)
+        .post(requestBody)
+        .build()
+
+    // Execute the request and process the response
+    client.newCall(request).enqueue(object: Callback {
+        @Override
+        override fun onFailure(call: Call, e: IOException) {
+            Log.d("DEBUG","Error while fetching users")
+        }
+        @Override
+        override fun onResponse(call: Call, response: Response) {
+            if (!response.isSuccessful) {
+                Log.d("DEBUG", "${response.code}")
+                return
+            }
+            Log.d("DEBUG","Success")
+            val json = response.body?.string()
+            Log.d("DEBUG",json!!)
+        }
+    })
 }
 
 @Preview(showBackground = true)

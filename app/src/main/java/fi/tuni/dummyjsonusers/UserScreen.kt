@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -21,13 +21,21 @@ fun UserScreen(users: List<User>?, navController: NavController) {
     Surface(
         color = MaterialTheme.colors.background
     ) {
-        if (users != null) {
-            Column() {
-                Header("Users")
-                UserList(users, navController)
+        Column() {
+            Header("Users")
+            Button(
+                onClick = { navController.navigate("addUserScreen") },
+                modifier = Modifier.align(End)
+            )
+            {
+                Text("+")
             }
-        } else {
-            LoadingScreen()
+            if (users != null) {
+                    UserList(users, navController)
+
+            } else {
+                LoadingScreen()
+            }
         }
     }
 }
@@ -58,7 +66,7 @@ fun UserList(users: List<User>, navController: NavController) {
     }
 }
 
-// TODO Better view
+// TODO Better view and own file
 @Composable
 fun UserView(user: User) {
     Column() {
