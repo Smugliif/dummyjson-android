@@ -77,13 +77,16 @@ fun MyNavigation() {
 //fetches users from the api
 suspend fun fetchUsers(): List<User>? {
     val deferred = CompletableDeferred<List<User>?>()
-
     val url = "https://dummyjson.com/users"
     val users = mutableListOf<User>()
+
+    // Create an instance of the client and request
     val client = OkHttpClient()
     val request = Request.Builder()
         .url(url)
         .build()
+
+    // Execute the request
     client.newCall(request).enqueue(object: Callback {
         @Override
         override fun onFailure(call: Call, e: IOException) {
