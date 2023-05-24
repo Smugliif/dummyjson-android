@@ -8,15 +8,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.InspectableModifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 
-class UserScreen  {
+class UserListView {
 
     @Composable
     fun Screen(users: List<User>?, navController: NavController) {
@@ -26,14 +25,19 @@ class UserScreen  {
             Column() {
                 Header("Users")
                 OutlinedButton(
-                    onClick = { navController.navigate("addUserScreen") },
-                    modifier = Modifier.align(End).padding(30.dp, 10.dp)
+                    onClick = { navController.navigate("addUserView") },
+                    modifier = Modifier
+                        .align(End)
+                        .padding(30.dp, 10.dp)
                 )
                 {
-                    Text("+")
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = "Add"
+                    )
                 }
                 if (users != null) {
-                        UserList(users, navController)
+                    UserList(users, navController)
 
                 } else {
                     LoadingScreen()
@@ -67,13 +71,4 @@ class UserScreen  {
             }
         }
     }
-
-    // TODO Better view and own file
-    @Composable
-    fun UserView(user: User) {
-        Column() {
-            Text(text = "Name: ${user.firstName}")
-        }
-    }
-
 }

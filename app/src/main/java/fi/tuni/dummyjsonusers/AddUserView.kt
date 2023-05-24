@@ -1,21 +1,21 @@
 package fi.tuni.dummyjsonusers
 
-import androidx.compose.runtime.Composable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.*
+import androidx.navigation.NavController
+import kotlinx.coroutines.launch
 
-class AddUserScreen: ViewModel() {
+class AddUserView : ViewModel() {
     @Composable
-    fun Screen() {
+    fun Screen(navController: NavController) {
         var firstName by remember { mutableStateOf("") }
         var lastName by remember { mutableStateOf("") }
         var newUser = User(
@@ -23,9 +23,10 @@ class AddUserScreen: ViewModel() {
             lastName = lastName
         )
         val showDialog = remember { mutableStateOf(false) }
-
         Column {
             Header(displayText = "New User")
+            BackArrow(navController = navController)
+            Spacer(modifier = Modifier.weight(1f) )
             Row() {
                 OutlinedTextField(
                     value = firstName,
@@ -40,8 +41,11 @@ class AddUserScreen: ViewModel() {
                     modifier = Modifier.weight(1f)
                 )
             }
-            Button(onClick = { viewModelScope.launch { showDialog.value = postUser(newUser) } },
-                modifier = Modifier.fillMaxWidth().padding(20.dp)
+            Button(
+                onClick = { viewModelScope.launch { showDialog.value = postUser(newUser) } },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
             ) {
                 Text("Save")
             }
@@ -70,6 +74,7 @@ class AddUserScreen: ViewModel() {
                     )
                 }
             }
+            Spacer(modifier = Modifier.weight(2f))
         }
     }
 }
