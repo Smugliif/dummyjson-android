@@ -7,23 +7,43 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
 
 
-class UserListView {
+class UserListView: ViewModel() {
 
     @Composable
     fun Screen(users: List<User>?, navController: NavController) {
+        var searchTerm by remember { mutableStateOf("") }
+        var usersList by remember { mutableStateOf<List<User>?>(users) }
+
+        LaunchedEffect(Unit) {
+            usersList = fetchUsers(null)
+        }
+
         Surface(
             color = MaterialTheme.colors.background
         ) {
             Column() {
                 Header("Users")
+                OutlinedTextField(
+                    value = searchTerm,
+                    onValueChange = {
+                        searchTerm = it
+                        viewModelScope.launch { usersList = fetchUsers(searchTerm) }
+                    },
+                    label = { Text("Search") },
+                    modifier = Modifier.fillMaxWidth()
+                )
                 OutlinedButton(
                     onClick = { navController.navigate("addUserView") },
                     modifier = Modifier
@@ -36,12 +56,20 @@ class UserListView {
                         contentDescription = "Add"
                     )
                 }
-                if (users != null) {
-                    UserList(users, navController)
+                if (usersList != null) {
+                    UserList(usersList!!, navController)
 
                 } else {
                     LoadingScreen()
                 }
+            }
+        }
+    }
+    @Composable
+    fun UserList(users: List<User>, navController: NavController) {
+        LazyColumn {
+            items(users) { user ->
+                UserCard(user, navController)
             }
         }
     }
@@ -63,12 +91,5 @@ class UserListView {
         }
     }
 
-    @Composable
-    fun UserList(users: List<User>, navController: NavController) {
-        LazyColumn {
-            items(users) { user ->
-                UserCard(user, navController)
-            }
-        }
-    }
+
 }
