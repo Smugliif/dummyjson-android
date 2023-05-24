@@ -16,60 +16,64 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 
-@Composable
-fun UserScreen(users: List<User>?, navController: NavController) {
-    Surface(
-        color = MaterialTheme.colors.background
-    ) {
-        Column() {
-            Header("Users")
-            Button(
-                onClick = { navController.navigate("addUserScreen") },
-                modifier = Modifier.align(End)
-            )
-            {
-                Text("+")
-            }
-            if (users != null) {
-                    UserList(users, navController)
+class UserScreen  {
 
-            } else {
-                LoadingScreen()
-            }
-        }
-    }
-}
-
-@Composable
-fun UserCard(user: User, navController: NavController) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(15.dp)
-            .clickable { navController.navigate("userView/${user.id}") },
-        elevation = 10.dp
-    ) {
-        Column(
-            modifier = Modifier.padding(15.dp)
+    @Composable
+    fun Screen(users: List<User>?, navController: NavController) {
+        Surface(
+            color = MaterialTheme.colors.background
         ) {
-            Text("${user.firstName} ${user.lastName}")
+            Column() {
+                Header("Users")
+                OutlinedButton(
+                    onClick = { navController.navigate("addUserScreen") },
+                    modifier = Modifier.align(End).padding(30.dp, 10.dp)
+                )
+                {
+                    Text("+")
+                }
+                if (users != null) {
+                        UserList(users, navController)
+
+                } else {
+                    LoadingScreen()
+                }
+            }
         }
     }
-}
 
-@Composable
-fun UserList(users: List<User>, navController: NavController) {
-    LazyColumn {
-        items(users) { user ->
-            UserCard(user, navController)
+    @Composable
+    fun UserCard(user: User, navController: NavController) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(15.dp)
+                .clickable { navController.navigate("userView/${user.id}") },
+            elevation = 10.dp
+        ) {
+            Column(
+                modifier = Modifier.padding(15.dp)
+            ) {
+                Text("${user.firstName} ${user.lastName}")
+            }
         }
     }
-}
 
-// TODO Better view and own file
-@Composable
-fun UserView(user: User) {
-    Column() {
-        Text(text = "Name: ${user.firstName}")
+    @Composable
+    fun UserList(users: List<User>, navController: NavController) {
+        LazyColumn {
+            items(users) { user ->
+                UserCard(user, navController)
+            }
+        }
     }
+
+    // TODO Better view and own file
+    @Composable
+    fun UserView(user: User) {
+        Column() {
+            Text(text = "Name: ${user.firstName}")
+        }
+    }
+
 }

@@ -1,6 +1,5 @@
 package fi.tuni.dummyjsonusers
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -17,9 +16,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import fi.tuni.dummyjsonusers.ui.theme.DummyJSONUsersTheme
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -53,7 +49,7 @@ fun MyNavigation() {
 
     NavHost(navController = navController, startDestination = "userList") {
         composable("userList") {
-            UserScreen(users, navController)
+            UserScreen().Screen(users, navController)
         }
         composable("userView/{userId}",
         arguments = listOf(
@@ -65,11 +61,11 @@ fun MyNavigation() {
             val userId = entry.arguments?.getInt("userId")
             val user = users?.find { it.id == userId }
             if (user != null) {
-                UserView(user)
+                UserScreen().UserView(user)
             } //TODO Error handling
         }
         composable("addUserScreen") {
-            AddUserScreen()
+            AddUserScreen().Screen()
         }
     }
 }
@@ -104,9 +100,9 @@ suspend fun fetchUsers(): List<User>? {
             val json = response.body?.string()
             if (json != null) {
                 val jsonObject = JSONObject(json)
-                val usersArray = jsonObject.getJSONArray("users")
-                for (i in 0 until usersArray.length()) {
-                    val userObject = usersArray.getJSONObject(i)
+                val usersJSONArray = jsonObject.getJSONArray("users")
+                for (i in 0 until usersJSONArray.length()) {
+                    val userObject = usersJSONArray.getJSONObject(i)
 
                     val newUser = User(
                         userObject.getInt("id"),
@@ -124,15 +120,20 @@ suspend fun fetchUsers(): List<User>? {
     return deferred.await()
 }
 
-fun postUser() {
+suspend fun postUser(user: User): Boolean {
+    val deferred = CompletableDeferred<Boolean>()
     val url = "https://dummyjson.com/users/add"
+    // Check that given user is valid
+    if (!isValidUser(user)) return false
+
     // Create an OkHttpClient instance
     val client = OkHttpClient()
 
     // Create a request body with the data to be sent
     val requestBody = FormBody.Builder()
-        .add("firstName", "value1")
-        .add("lastName", "value2")
+        .add("firstName", user.firstName)
+        .add("lastName", user.lastName)
+        .add("address", "myAddress")
         .build()
 
     // Create a POST request with the desired URL and request body
@@ -146,18 +147,29 @@ fun postUser() {
         @Override
         override fun onFailure(call: Call, e: IOException) {
             Log.d("DEBUG","Error while fetching users")
+            deferred.complete(false)
         }
         @Override
         override fun onResponse(call: Call, response: Response) {
             if (!response.isSuccessful) {
                 Log.d("DEBUG", "${response.code}")
+                deferred.complete(false)
                 return
             }
             Log.d("DEBUG","Success")
             val json = response.body?.string()
             Log.d("DEBUG",json!!)
+            deferred.complete(true)
         }
     })
+    return deferred.await()
+}
+
+fun isValidUser(user: User): Boolean {
+    if (user.firstName == "") {
+        return false
+    }
+    return true
 }
 
 @Preview(showBackground = true)

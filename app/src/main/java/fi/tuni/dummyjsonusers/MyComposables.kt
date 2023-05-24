@@ -22,7 +22,9 @@ fun Header(displayText: String) {
             text = displayText,
             fontSize = 30.sp,
             textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.CenterHorizontally).padding(all = 20.dp)
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(all = 20.dp)
         )
     }
 }
