@@ -33,7 +33,7 @@ class UserListView: ViewModel() {
         Surface(
             color = MaterialTheme.colors.background
         ) {
-            Column() {
+            Column {
                 Header("Users")
                 OutlinedTextField(
                     value = searchTerm,

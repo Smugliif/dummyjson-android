@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -20,9 +19,9 @@ fun UserView(user: User, navController: NavController) {
     var isDeleted by remember { mutableStateOf(false) }
     var isError by remember { mutableStateOf(false) }
 
-    Column() {
+    Column {
         Header("${user.firstName} ${user.lastName}")
-        Row() {
+        Row {
             BackArrow(navController = navController)
             Spacer(modifier = Modifier.weight(1f))
             OutlinedButton(onClick = { navController.navigate("editUserView/${user.id}") }) {

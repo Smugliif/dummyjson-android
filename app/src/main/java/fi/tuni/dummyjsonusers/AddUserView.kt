@@ -29,7 +29,7 @@ fun AddUserView(navController: NavController) {
         Header(displayText = "New User")
         BackArrow(navController = navController)
         Spacer(modifier = Modifier.weight(1f))
-        Row() {
+        Row {
             OutlinedTextField(
                 value = firstName,
                 onValueChange = { if (it.length <= 50) firstName = it },
