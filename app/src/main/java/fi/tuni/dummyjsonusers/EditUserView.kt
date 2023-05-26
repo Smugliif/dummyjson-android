@@ -1,13 +1,15 @@
 package fi.tuni.dummyjsonusers
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
 
 @Composable
 fun EditUserView(user: User, navController: NavController) {
@@ -34,5 +36,14 @@ fun EditUserView(user: User, navController: NavController) {
                 modifier = Modifier.weight(1f)
             )
         }
+        Button(
+            onClick = {  },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            Text("Save")
+        }
+        Spacer(modifier = Modifier.weight(2f))
     }
 }

@@ -19,6 +19,9 @@ fun UserView(user: User, navController: NavController) {
         Row() {
             BackArrow(navController = navController)
             Spacer(modifier = Modifier.weight(1f))
+            OutlinedButton(onClick = { navController.navigate("editUserView/${user.id}") }) {
+                Text(text = "Edit")
+            }
             OutlinedButton(
                 onClick = { deleteUser(user.id!!) },
                 modifier = Modifier.padding(horizontal = 30.dp)
@@ -29,6 +32,7 @@ fun UserView(user: User, navController: NavController) {
                 )
             }
         }
+
 
     }
 }

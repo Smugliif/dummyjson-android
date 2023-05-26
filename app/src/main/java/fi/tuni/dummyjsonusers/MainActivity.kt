@@ -69,8 +69,18 @@ class MainActivity : ComponentActivity() {
             composable("addUserView") {
                 AddUserView().Screen(navController)
             }
-            composable("editUserView/{user}") {
-
+            composable("editUserView/{userId}",
+                arguments = listOf(
+                    navArgument("userId") {
+                        type = NavType.IntType
+                    }
+                ))
+            { entry ->
+                val userId = entry.arguments?.getInt("userId")
+                val user = users?.find { it.id == userId }
+                if (user != null) {
+                    EditUserView(user, navController)
+                }
             }
         }
     }
