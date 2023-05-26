@@ -86,7 +86,7 @@ fun MyNavigation() {
 
 
 fun isValidUser(user: User): Boolean {
-    if (user.firstName == "") {
+    if (user.firstName == "" || user.lastName == "") {
         return false
     }
     return true
