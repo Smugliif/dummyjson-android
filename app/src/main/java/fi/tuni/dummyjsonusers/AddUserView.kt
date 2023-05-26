@@ -30,13 +30,13 @@ class AddUserView : ViewModel() {
             Row() {
                 OutlinedTextField(
                     value = firstName,
-                    onValueChange = { firstName = it },
+                    onValueChange = { if (it.length <= 50) firstName = it },
                     label = { Text("First Name") },
                     modifier = Modifier.weight(1f)
                 )
                 OutlinedTextField(
                     value = lastName,
-                    onValueChange = { lastName = it },
+                    onValueChange = { if (it.length <= 50) lastName = it },
                     label = { Text("Surname") },
                     modifier = Modifier.weight(1f)
                 )

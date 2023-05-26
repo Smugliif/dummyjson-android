@@ -10,6 +10,7 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -36,16 +37,15 @@ fun Header(displayText: String) {
 @Composable
 fun LoadingScreen() {
     Column(Modifier.fillMaxSize()) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(modifier = Modifier.align(CenterHorizontally))
     }
 }
-
 
 
 @Composable
 fun BackArrow(navController: NavController) {
     OutlinedButton(
-        onClick = { navController.navigate("userList") },
+        onClick = { navController.popBackStack() },
         modifier = Modifier.padding(horizontal = 30.dp)
     ) {
         Icon(

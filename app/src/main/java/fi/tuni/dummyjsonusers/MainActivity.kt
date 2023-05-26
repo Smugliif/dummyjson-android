@@ -69,6 +69,9 @@ class MainActivity : ComponentActivity() {
             composable("addUserView") {
                 AddUserView().Screen(navController)
             }
+            composable("editUserView/{user}") {
+
+            }
         }
     }
 
