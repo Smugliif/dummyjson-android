@@ -32,60 +32,57 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainScreen().MyNavigation()
+                    MyNavigation()
                 }
             }
         }
     }
 }
 
-class MainScreen {
-    @Composable
-    fun MyNavigation() {
-        val navController = rememberNavController()
-        var users by remember { mutableStateOf<List<User>?>(null) }
+@Composable
+fun MyNavigation() {
+    val navController = rememberNavController()
+    var users by remember { mutableStateOf<List<User>?>(null) }
 
-        LaunchedEffect(Unit) {
-            users = fetchUsers(null)
+    LaunchedEffect(Unit) {
+        users = fetchUsers(null)
+    }
+
+    NavHost(navController = navController, startDestination = "userList") {
+        composable("userList") {
+            UserListView().Screen(users, navController)
         }
-
-        NavHost(navController = navController, startDestination = "userList") {
-            composable("userList") {
-                UserListView().Screen(users, navController)
-            }
-            composable("userView/{userId}",
-                arguments = listOf(
-                    navArgument("userId") {
-                        type = NavType.IntType
-                    }
-                ))
-            { entry ->
-                val userId = entry.arguments?.getInt("userId")
-                val user = users?.find { it.id == userId }
-                if (user != null) {
-                    UserView(user, navController)
-                } //TODO Error handling
-            }
-            composable("addUserView") {
-                AddUserView().Screen(navController)
-            }
-            composable("editUserView/{userId}",
-                arguments = listOf(
-                    navArgument("userId") {
-                        type = NavType.IntType
-                    }
-                ))
-            { entry ->
-                val userId = entry.arguments?.getInt("userId")
-                val user = users?.find { it.id == userId }
-                if (user != null) {
-                    EditUserView(user, navController)
+        composable("userView/{userId}",
+            arguments = listOf(
+                navArgument("userId") {
+                    type = NavType.IntType
                 }
+            ))
+        { entry ->
+            val userId = entry.arguments?.getInt("userId")
+            val user = users?.find { it.id == userId }
+            if (user != null) {
+                UserView(user, navController)
+            } //TODO Error handling
+        }
+        composable("addUserView") {
+            AddUserView().Screen(navController)
+        }
+        composable("editUserView/{userId}",
+            arguments = listOf(
+                navArgument("userId") {
+                    type = NavType.IntType
+                }
+            ))
+        { entry ->
+            val userId = entry.arguments?.getInt("userId")
+            val user = users?.find { it.id == userId }
+            if (user != null) {
+                EditUserView(user, navController)
             }
         }
     }
 }
-
 
 
 fun isValidUser(user: User): Boolean {
@@ -99,6 +96,6 @@ fun isValidUser(user: User): Boolean {
 @Composable
 fun DefaultPreview() {
     DummyJSONUsersTheme {
-        MainScreen().MyNavigation()
+        MyNavigation()
     }
 }

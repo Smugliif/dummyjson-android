@@ -5,11 +5,13 @@ import kotlinx.coroutines.CompletableDeferred
 import okhttp3.*
 import java.io.IOException
 
-suspend fun postUser(user: User): Boolean {
-    val deferred = CompletableDeferred<Boolean>()
+fun postUser(user: User, onSuccess: () -> Unit, onFailure: () -> Unit) {
     val url = "https://dummyjson.com/users/add"
     // Check that given user is valid
-    if (!isValidUser(user)) return false
+    if (!isValidUser(user)) {
+        onFailure()
+        return
+    }
 
     // Create an OkHttpClient instance
     val client = OkHttpClient()
@@ -31,21 +33,20 @@ suspend fun postUser(user: User): Boolean {
         @Override
         override fun onFailure(call: Call, e: IOException) {
             Log.d("DEBUG", "Error while fetching users")
-            deferred.complete(false)
+            onFailure()
         }
 
         @Override
         override fun onResponse(call: Call, response: Response) {
             if (!response.isSuccessful) {
                 Log.d("DEBUG", "${response.code}")
-                deferred.complete(false)
+                onFailure()
                 return
             }
             Log.d("DEBUG", "Success")
             val json = response.body?.string()
             Log.d("DEBUG", json!!)
-            deferred.complete(true)
+            onSuccess()
         }
     })
-    return deferred.await()
 }

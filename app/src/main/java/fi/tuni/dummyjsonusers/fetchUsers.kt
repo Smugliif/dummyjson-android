@@ -8,12 +8,15 @@ import java.io.IOException
 
 // Fetches users from the api
 suspend fun fetchUsers(keyword: String?): List<User>? {
+    val users = mutableListOf<User>()
     val deferred = CompletableDeferred<List<User>?>()
+
+    // Fetch URL
     var url = "https://dummyjson.com/users"
+    // If there is a keyword search users with keyword
     if (keyword != null) {
         url = "https://dummyjson.com/users/search?q=${keyword}"
     }
-    val users = mutableListOf<User>()
 
     // Create an instance of the client and request
     val client = OkHttpClient()
@@ -21,7 +24,7 @@ suspend fun fetchUsers(keyword: String?): List<User>? {
         .url(url)
         .build()
 
-    // Execute the request
+    // Execute request
     client.newCall(request).enqueue(object : Callback {
         @Override
         override fun onFailure(call: Call, e: IOException) {
@@ -39,6 +42,7 @@ suspend fun fetchUsers(keyword: String?): List<User>? {
             Log.d("DEBUG", "Success")
             val json = response.body?.string()
             if (json != null) {
+                // Add users from JSON to list
                 val jsonObject = JSONObject(json)
                 val usersJSONArray = jsonObject.getJSONArray("users")
                 for (i in 0 until usersJSONArray.length()) {
@@ -49,7 +53,6 @@ suspend fun fetchUsers(keyword: String?): List<User>? {
                         userObject.getString("firstName"),
                         userObject.getString("lastName")
                     )
-//                    Log.d("DEBUG", newUser.toString())
                     users.add(newUser)
                 }
             }

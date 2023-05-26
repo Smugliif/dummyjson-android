@@ -6,6 +6,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -22,11 +23,13 @@ class AddUserView : ViewModel() {
             firstName = firstName,
             lastName = lastName
         )
-        val showDialog = remember { mutableStateOf(false) }
+        var showDialog by remember { mutableStateOf(false) }
+        var isError by remember { mutableStateOf(false) }
+
         Column {
             Header(displayText = "New User")
             BackArrow(navController = navController)
-            Spacer(modifier = Modifier.weight(1f) )
+            Spacer(modifier = Modifier.weight(1f))
             Row() {
                 OutlinedTextField(
                     value = firstName,
@@ -42,37 +45,46 @@ class AddUserView : ViewModel() {
                 )
             }
             Button(
-                onClick = { viewModelScope.launch { showDialog.value = postUser(newUser) } },
+                onClick = {
+                    postUser(
+                        newUser,
+                        onSuccess = { showDialog = true },
+                        onFailure = { isError = true })
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp)
             ) {
                 Text("Save")
             }
-            //TODO This looks horrible
-            if (showDialog.value) {
-                if (showDialog.value) {
-                    AlertDialog(
-                        onDismissRequest = {
-                            showDialog.value = false
-                        },
-                        title = {
-                            Text(text = "User Successfully Saved")
-                        },
-                        text = {
-                            Text("User ${newUser.firstName} has been saved")
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = {
-                                    showDialog.value = false
-                                }
-                            ) {
-                                Text("Confirm")
+
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false
+                    },
+                    title = {
+                        Text(text = "User Successfully Saved")
+                    },
+                    text = {
+                        Text("User ${newUser.firstName} has been saved")
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                showDialog = false
                             }
+                        ) {
+                            Text("Confirm")
                         }
-                    )
-                }
+                    }
+                )
+            }
+            if (isError) {
+                Text(
+                    text = "Something went wrong.",
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
             }
             Spacer(modifier = Modifier.weight(2f))
         }
