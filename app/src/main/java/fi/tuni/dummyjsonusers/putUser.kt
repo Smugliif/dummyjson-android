@@ -49,6 +49,7 @@ fun putUser(user: User, onSuccess: () -> Unit, onFailure: () -> Unit) {
             val json = response.body?.string()
             Log.d("DEBUG", json!!)
             onSuccess()
+            response.close()
         }
     })
 }
