@@ -66,7 +66,7 @@ fun MyNavigation() {
             } //TODO Error handling
         }
         composable("addUserView") {
-            AddUserView().Screen(navController)
+            AddUserView(navController)
         }
         composable("editUserView/{userId}",
             arguments = listOf(
