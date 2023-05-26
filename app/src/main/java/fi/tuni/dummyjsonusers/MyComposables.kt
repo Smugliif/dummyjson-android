@@ -35,14 +35,6 @@ fun Header(displayText: String) {
 }
 
 @Composable
-fun LoadingScreen() {
-    Column(Modifier.fillMaxSize()) {
-        CircularProgressIndicator(modifier = Modifier.align(CenterHorizontally))
-    }
-}
-
-
-@Composable
 fun BackArrow(navController: NavController) {
     OutlinedButton(
         onClick = { navController.popBackStack() },
@@ -54,3 +46,11 @@ fun BackArrow(navController: NavController) {
         )
     }
 }
+
+@Composable
+fun LoadingScreen() {
+    Column(Modifier.fillMaxSize()) {
+        CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+    }
+}
+

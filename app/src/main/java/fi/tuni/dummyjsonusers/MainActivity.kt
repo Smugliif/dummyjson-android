@@ -32,14 +32,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MyNavigation()
+                    MainScreen().MyNavigation()
                 }
             }
         }
     }
 }
 
-
+class MainScreen {
     @Composable
     fun MyNavigation() {
         val navController = rememberNavController()
@@ -84,6 +84,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
 
 
 fun isValidUser(user: User): Boolean {
@@ -97,6 +99,6 @@ fun isValidUser(user: User): Boolean {
 @Composable
 fun DefaultPreview() {
     DummyJSONUsersTheme {
-        MyNavigation()
+        MainScreen().MyNavigation()
     }
 }

@@ -37,6 +37,7 @@ fun UserView(user: User, navController: NavController) {
     }
 }
 
+// Send DELETE request to API with target user's ID
 fun deleteUser(id: Int) {
     val client = OkHttpClient()
 

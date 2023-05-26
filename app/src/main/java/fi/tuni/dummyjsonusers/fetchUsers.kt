@@ -49,7 +49,7 @@ suspend fun fetchUsers(keyword: String?): List<User>? {
                         userObject.getString("firstName"),
                         userObject.getString("lastName")
                     )
-                    Log.d("DEBUG", newUser.toString())
+//                    Log.d("DEBUG", newUser.toString())
                     users.add(newUser)
                 }
             }

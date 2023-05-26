@@ -18,7 +18,7 @@ class AddUserView : ViewModel() {
     fun Screen(navController: NavController) {
         var firstName by remember { mutableStateOf("") }
         var lastName by remember { mutableStateOf("") }
-        var newUser = User(
+        val newUser = User(
             firstName = firstName,
             lastName = lastName
         )
