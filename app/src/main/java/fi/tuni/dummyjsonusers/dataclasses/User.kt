@@ -1,4 +1,4 @@
-package fi.tuni.dummyjsonusers
+package fi.tuni.dummyjsonusers.dataclasses
 
 data class User(
     val id: Int? = null,

@@ -15,7 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import fi.tuni.dummyjsonusers.composables.Header
+import fi.tuni.dummyjsonusers.composables.LoadingScreen
+import fi.tuni.dummyjsonusers.dataclasses.User
 import kotlinx.coroutines.launch
 
 

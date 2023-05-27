@@ -1,6 +1,5 @@
 package fi.tuni.dummyjsonusers
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -9,8 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import okhttp3.*
-import java.io.IOException
+import fi.tuni.dummyjsonusers.composables.BackArrow
+import fi.tuni.dummyjsonusers.composables.Header
+import fi.tuni.dummyjsonusers.dataclasses.User
 
 
 @Composable
@@ -101,33 +101,3 @@ fun UserView(user: User, navController: NavController) {
     }
 }
 
-// Send DELETE request to API with target user's ID
-fun deleteUser(id: Int, onSuccess: () -> Unit, onFailure: () -> Unit) {
-    val client = OkHttpClient()
-
-    val request = Request.Builder()
-        .url("https://dummyjson.com/users/${id}")
-        .delete()
-        .build()
-
-    client.newCall(request).enqueue(object : Callback {
-        override fun onFailure(call: Call, e: IOException) {
-            e.printStackTrace()
-            onFailure()
-        }
-
-        override fun onResponse(call: Call, response: Response) {
-            // Handle request success
-            if (response.isSuccessful) {
-                Log.d("DEBUG", "DELETE request successful")
-                val json = response.body?.string()
-                Log.d("DEBUG", json!!)
-                onSuccess()
-            } else {
-                Log.d("DEBUG", "DELETE request failed")
-                onFailure()
-            }
-            response.close()
-        }
-    })
-}

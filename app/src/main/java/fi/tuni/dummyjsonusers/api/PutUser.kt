@@ -1,9 +1,7 @@
 package fi.tuni.dummyjsonusers
 
 import android.util.Log
-import android.view.View
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CompletableDeferred
+import fi.tuni.dummyjsonusers.dataclasses.User
 import okhttp3.*
 import java.io.IOException
 

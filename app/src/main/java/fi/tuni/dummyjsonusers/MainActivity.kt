@@ -1,7 +1,6 @@
 package fi.tuni.dummyjsonusers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,11 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import fi.tuni.dummyjsonusers.dataclasses.User
 import fi.tuni.dummyjsonusers.ui.theme.DummyJSONUsersTheme
-import kotlinx.coroutines.CompletableDeferred
-import okhttp3.*
-import org.json.JSONObject
-import java.io.IOException
 
 
 class MainActivity : ComponentActivity() {
@@ -84,13 +80,6 @@ fun MyNavigation() {
     }
 }
 
-
-fun isValidUser(user: User): Boolean {
-    if (user.firstName == "" && user.lastName == "") {
-        return false
-    }
-    return true
-}
 
 @Preview(showBackground = true)
 @Composable

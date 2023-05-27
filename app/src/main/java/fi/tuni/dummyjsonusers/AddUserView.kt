@@ -9,10 +9,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import kotlinx.coroutines.launch
+import fi.tuni.dummyjsonusers.composables.BackArrow
+import fi.tuni.dummyjsonusers.composables.Header
+import fi.tuni.dummyjsonusers.dataclasses.User
 
 @Composable
 fun AddUserView(navController: NavController) {
