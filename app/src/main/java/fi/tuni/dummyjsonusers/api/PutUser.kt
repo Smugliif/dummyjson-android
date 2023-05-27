@@ -1,7 +1,8 @@
-package fi.tuni.dummyjsonusers
+package fi.tuni.dummyjsonusers.api
 
 import android.util.Log
 import fi.tuni.dummyjsonusers.dataclasses.User
+import fi.tuni.dummyjsonusers.isValidUser
 import okhttp3.*
 import java.io.IOException
 

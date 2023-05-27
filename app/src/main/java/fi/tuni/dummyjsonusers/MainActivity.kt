@@ -9,12 +9,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import fi.tuni.dummyjsonusers.dataclasses.User
 import fi.tuni.dummyjsonusers.ui.theme.DummyJSONUsersTheme
 
 
@@ -28,53 +22,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MyNavigation()
+                    Navigation()
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun MyNavigation() {
-    val navController = rememberNavController()
-    var users by remember { mutableStateOf<List<User>?>(null) }
-
-    LaunchedEffect(Unit) {
-        users = fetchUsers(null)
-    }
-
-    NavHost(navController = navController, startDestination = "userList") {
-        composable("userList") {
-            UserListView().Screen(users, navController)
-        }
-        composable("userView/{userId}",
-            arguments = listOf(
-                navArgument("userId") {
-                    type = NavType.IntType
-                }
-            ))
-        { entry ->
-            val userId = entry.arguments?.getInt("userId")
-            val user = users?.find { it.id == userId }
-            if (user != null) {
-                UserView(user, navController)
-            } //TODO Error handling
-        }
-        composable("addUserView") {
-            AddUserView(navController)
-        }
-        composable("editUserView/{userId}",
-            arguments = listOf(
-                navArgument("userId") {
-                    type = NavType.IntType
-                }
-            ))
-        { entry ->
-            val userId = entry.arguments?.getInt("userId")
-            val user = users?.find { it.id == userId }
-            if (user != null) {
-                EditUserView(user, navController)
             }
         }
     }
@@ -85,6 +34,6 @@ fun MyNavigation() {
 @Composable
 fun DefaultPreview() {
     DummyJSONUsersTheme {
-        MyNavigation()
+        Navigation()
     }
 }

@@ -1,22 +1,19 @@
-package fi.tuni.dummyjsonusers
+package fi.tuni.dummyjsonusers.api
 
 import android.util.Log
 import fi.tuni.dummyjsonusers.dataclasses.User
-import kotlinx.coroutines.CompletableDeferred
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
 // Fetches users from the api
-suspend fun fetchUsers(keyword: String?): List<User>? {
+fun fetchUsers(searchKeyword: String?, onSuccess: (List<User>) -> Unit, onFailure: () -> Unit = {}) {
     val users = mutableListOf<User>()
-    val deferred = CompletableDeferred<List<User>?>()
-
     // Fetch URL
     var url = "https://dummyjson.com/users"
     // If there is a keyword search users with keyword
-    if (keyword != null) {
-        url = "https://dummyjson.com/users/search?q=${keyword}"
+    if (searchKeyword != null) {
+        url = "https://dummyjson.com/users/search?q=${searchKeyword}"
     }
 
     // Create an instance of the client and request
@@ -30,14 +27,15 @@ suspend fun fetchUsers(keyword: String?): List<User>? {
         @Override
         override fun onFailure(call: Call, e: IOException) {
             Log.d("DEBUG", "Error while fetching users")
-            deferred.complete(null)
+            onFailure()
+            return
         }
 
         @Override
         override fun onResponse(call: Call, response: Response) {
             if (!response.isSuccessful) {
                 Log.d("DEBUG", response.message)
-                deferred.complete(null)
+                onFailure()
                 return
             }
             Log.d("DEBUG", "Success")
@@ -57,9 +55,8 @@ suspend fun fetchUsers(keyword: String?): List<User>? {
                     users.add(newUser)
                 }
             }
-            deferred.complete(users)
+            onSuccess(users)
         }
     })
 
-    return deferred.await()
 }

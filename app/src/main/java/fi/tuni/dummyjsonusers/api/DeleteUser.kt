@@ -1,4 +1,4 @@
-package fi.tuni.dummyjsonusers
+package fi.tuni.dummyjsonusers.api
 
 import android.util.Log
 import okhttp3.*

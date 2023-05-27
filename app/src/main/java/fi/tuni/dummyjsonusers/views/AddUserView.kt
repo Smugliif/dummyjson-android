@@ -1,4 +1,4 @@
-package fi.tuni.dummyjsonusers
+package fi.tuni.dummyjsonusers.views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.AlertDialog
@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import fi.tuni.dummyjsonusers.api.postUser
 import fi.tuni.dummyjsonusers.composables.BackArrow
 import fi.tuni.dummyjsonusers.composables.Header
 import fi.tuni.dummyjsonusers.dataclasses.User

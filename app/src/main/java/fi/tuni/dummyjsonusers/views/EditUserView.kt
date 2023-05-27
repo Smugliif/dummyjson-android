@@ -1,4 +1,4 @@
-package fi.tuni.dummyjsonusers
+package fi.tuni.dummyjsonusers.views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import fi.tuni.dummyjsonusers.api.putUser
 import fi.tuni.dummyjsonusers.composables.BackArrow
 import fi.tuni.dummyjsonusers.composables.Header
 import fi.tuni.dummyjsonusers.dataclasses.User

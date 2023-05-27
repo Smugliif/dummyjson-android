@@ -1,4 +1,4 @@
-package fi.tuni.dummyjsonusers
+package fi.tuni.dummyjsonusers.views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import fi.tuni.dummyjsonusers.R
+import fi.tuni.dummyjsonusers.api.deleteUser
 import fi.tuni.dummyjsonusers.composables.BackArrow
 import fi.tuni.dummyjsonusers.composables.Header
 import fi.tuni.dummyjsonusers.dataclasses.User
