@@ -6,7 +6,15 @@ import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
-// Fetches users from the api
+/**
+ * Fetches users from the dummyJSON API using OkHttp.
+ * If no keyword is given, it fetches all users, otherwise it fetches users with the keyword.
+ * Depending on success invokes one of two callbacks, onSuccess() or onFailure().
+ *
+ * @param searchKeyword Keyword for search calls.
+ * @param onSuccess Lambda callback invoked on fetch success that has List<User> as a parameter.
+ * @param onFailure Lambda callback invoked when the fetch encounters an error.
+ */
 fun fetchUsers(searchKeyword: String?, onSuccess: (List<User>) -> Unit, onFailure: () -> Unit = {}) {
     val users = mutableListOf<User>()
     // Fetch URL

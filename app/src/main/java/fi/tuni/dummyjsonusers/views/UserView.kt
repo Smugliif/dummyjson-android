@@ -15,6 +15,13 @@ import fi.tuni.dummyjsonusers.composables.Header
 import fi.tuni.dummyjsonusers.dataclasses.User
 
 
+/**
+ * User view displays selected User's information.
+ * User deletion is invoked here and edit view is navigated to from here.
+ *
+ * @param user Current User.
+ * @param navController Used to navigate back and into editUserView.
+ */
 @Composable
 fun UserView(user: User, navController: NavController) {
     var showDeletePrompt by remember { mutableStateOf(false) }

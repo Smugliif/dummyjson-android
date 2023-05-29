@@ -14,6 +14,15 @@ import fi.tuni.dummyjsonusers.composables.BackArrow
 import fi.tuni.dummyjsonusers.composables.Header
 import fi.tuni.dummyjsonusers.dataclasses.User
 
+/**
+ * Edit user view
+ *
+ * View used to edit the selected user's names.
+ * On button click the API is sent a PUT request.
+ *
+ * @param user Selected user.
+ * @param navController NavController passed for navigation invocations.
+ */
 @Composable
 fun EditUserView(user: User, navController: NavController) {
     var firstName by remember { mutableStateOf("${user.firstName}") }
@@ -39,6 +48,7 @@ fun EditUserView(user: User, navController: NavController) {
                 modifier = Modifier.weight(1f)
             )
         }
+        // Make API call on button click.
         Button(
             onClick = {
                 val editedUser = User(

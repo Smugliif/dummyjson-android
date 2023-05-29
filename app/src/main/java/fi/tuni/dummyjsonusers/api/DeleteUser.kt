@@ -4,6 +4,15 @@ import android.util.Log
 import okhttp3.*
 import java.io.IOException
 
+/**
+ * Delete user deletes given users by ID.
+ *
+ * Send DELETE request to API with target user's ID then invoke callback depending on success.
+ *
+ * @param id Target user's ID.
+ * @param onSuccess Callback lambda invoked on success.
+ * @param onFailure Callback lambda invoked on failure.
+ */
 // Send DELETE request to API with target user's ID
 fun deleteUser(id: Int, onSuccess: () -> Unit, onFailure: () -> Unit) {
     val client = OkHttpClient()

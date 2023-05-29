@@ -6,6 +6,16 @@ import fi.tuni.dummyjsonusers.isValidUser
 import okhttp3.*
 import java.io.IOException
 
+/**
+ * Post user sends a new user to the backend.
+ *
+ * It first checks that the user is valid and then invokes a callback depending on success.
+ * Uses OkHttp for the API call.
+ *
+ * @param user User object that will be sent to the backend.
+ * @param onSuccess Callback lambda invoked on success.
+ * @param onFailure Callback lambda invoked when encountering an error.
+ */
 fun postUser(user: User, onSuccess: () -> Unit, onFailure: () -> Unit) {
     val url = "https://dummyjson.com/users/add"
     // Check that given user is valid
@@ -17,7 +27,7 @@ fun postUser(user: User, onSuccess: () -> Unit, onFailure: () -> Unit) {
     // Create an OkHttpClient instance
     val client = OkHttpClient()
 
-    // Create a request body with the data to be sent
+    // Create a request body with the names
     val requestBody = FormBody.Builder()
         .add("firstName", user.firstName)
         .add("lastName", user.lastName)

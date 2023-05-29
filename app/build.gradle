@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply plugin: "org.jetbrains.dokka"
+
 android {
     namespace 'fi.tuni.dummyjsonusers'
     compileSdk 33
@@ -65,4 +67,5 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+    dokkaPlugin 'org.jetbrains.dokka:android-documentation-plugin:1.8.10'
 }

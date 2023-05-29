@@ -10,6 +10,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import fi.tuni.dummyjsonusers.R
 
+/**
+ * Back arrow displayed as a simple arrow icon inside a Button.
+ * On click navigates to last view using navController.
+ *
+ * @param navController Uses navController to pop back in stack views.
+ */
 @Composable
 fun BackArrow(navController: NavController) {
     OutlinedButton(

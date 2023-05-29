@@ -1,9 +1,7 @@
 package fi.tuni.dummyjsonusers.views
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -20,6 +18,12 @@ import fi.tuni.dummyjsonusers.composables.LoadingScreen
 import fi.tuni.dummyjsonusers.dataclasses.User
 
 
+/**
+ * User list view
+ *
+ * @param users List of User objects to be displayed in the Composable List.
+ * @param navController Navigation controller declared in Navigation, for navigating between views.
+ */
 @Composable
 fun UserListView(users: List<User>?, navController: NavController) {
     var searchTerm by remember { mutableStateOf("") }
@@ -69,6 +73,12 @@ fun UserListView(users: List<User>?, navController: NavController) {
     }
 }
 
+/**
+ * User list
+ *
+ * @param users List of User objects to be iterated into UserCard Composables.
+ * @param navController Passed to UserCards.
+ */
 @Composable
 fun UserList(users: List<User>, navController: NavController) {
     LazyColumn {
@@ -78,6 +88,12 @@ fun UserList(users: List<User>, navController: NavController) {
     }
 }
 
+/**
+ * User card
+ *
+ * @param user Current User object.
+ * @param navController Used to navigate to this user's specific view on click.
+ */
 @Composable
 fun UserCard(user: User, navController: NavController) {
     Card(
@@ -90,7 +106,15 @@ fun UserCard(user: User, navController: NavController) {
         Column(
             modifier = Modifier.padding(15.dp)
         ) {
-            Text("${user.firstName} ${user.lastName}")
+            Row {
+                Text("${user.firstName} ${user.lastName}")
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_more_vert_24),
+                    contentDescription = "Forward"
+                )
+            }
+
         }
     }
 }

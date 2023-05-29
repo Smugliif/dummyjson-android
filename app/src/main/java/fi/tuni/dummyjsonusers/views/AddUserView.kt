@@ -15,6 +15,13 @@ import fi.tuni.dummyjsonusers.composables.BackArrow
 import fi.tuni.dummyjsonusers.composables.Header
 import fi.tuni.dummyjsonusers.dataclasses.User
 
+/**
+ * Add user view for new user making.
+ *
+ * Composable view to add new users to the backend.
+ *
+ * @param navController NavController object used for navigation calls.
+ */
 @Composable
 fun AddUserView(navController: NavController) {
     var firstName by remember { mutableStateOf("") }

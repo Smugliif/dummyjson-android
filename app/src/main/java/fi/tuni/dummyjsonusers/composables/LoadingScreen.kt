@@ -7,6 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
+/**
+ * Loading screen displaying a centered CircularProgressIndicator Composable.
+ *
+ */
 @Composable
 fun LoadingScreen() {
     Column(Modifier.fillMaxSize()) {

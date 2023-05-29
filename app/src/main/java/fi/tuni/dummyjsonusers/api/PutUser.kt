@@ -6,6 +6,15 @@ import fi.tuni.dummyjsonusers.isValidUser
 import okhttp3.*
 import java.io.IOException
 
+/**
+ * Sends a modified user to the backend.
+ * First checks that the user is valid and then invokes callback depending on success.
+ * Uses OkHttp for the API call.
+ *
+ * @param user Modified user object.
+ * @param onSuccess Callback lambda invoked on success.
+ * @param onFailure Callback lambda invoked when encountering an error.
+ */
 fun putUser(user: User, onSuccess: () -> Unit, onFailure: () -> Unit) {
     val url = "https://dummyjson.com/users/${user.id}"
     // Check that given user is valid

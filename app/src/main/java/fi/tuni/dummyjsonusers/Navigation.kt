@@ -14,6 +14,13 @@ import fi.tuni.dummyjsonusers.views.EditUserView
 import fi.tuni.dummyjsonusers.views.UserListView
 import fi.tuni.dummyjsonusers.views.UserView
 
+/**
+ * Navigation
+ *
+ * Composable creating the NavController object and NavHost for the app's navigation.
+ * A List of User objects is created here and filled with data from the backend.
+ *
+ */
 @Preview
 @Composable
 fun Navigation() {
@@ -30,6 +37,9 @@ fun Navigation() {
         composable("userList") {
             UserListView(users, navController)
         }
+        /**
+         * User IDs are used to navigate to views specific to each user.
+         */
         composable("userView/{userId}",
             arguments = listOf(
                 navArgument("userId") {

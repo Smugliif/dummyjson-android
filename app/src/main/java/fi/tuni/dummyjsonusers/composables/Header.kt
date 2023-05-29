@@ -11,6 +11,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Simple header using a Column and Text Composable that display given String.
+ *
+ * @param displayText String that will be displayed.
+ */
 @Composable
 fun Header(displayText: String) {
     Column(
