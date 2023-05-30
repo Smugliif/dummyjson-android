@@ -18,7 +18,7 @@ import fi.tuni.dummyjsonusers.dataclasses.User
  * Edit user view
  *
  * View used to edit the selected user's names.
- * On button click the API is sent a PUT request.
+ * On button click the putUser() function is invoked to make a PUT request.
  *
  * @param user Selected user.
  * @param navController NavController passed for navigation invocations.

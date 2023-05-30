@@ -10,8 +10,8 @@ import java.io.IOException
  * Send DELETE request to API with target user's ID then invoke callback depending on success.
  *
  * @param id Target user's ID.
- * @param onSuccess Callback lambda invoked on success.
- * @param onFailure Callback lambda invoked on failure.
+ * @param onSuccess Callback lambda invoked on success of DELETE request.
+ * @param onFailure Callback lambda invoked on failure of DELETE request.
  */
 // Send DELETE request to API with target user's ID
 fun deleteUser(id: Int, onSuccess: () -> Unit, onFailure: () -> Unit) {

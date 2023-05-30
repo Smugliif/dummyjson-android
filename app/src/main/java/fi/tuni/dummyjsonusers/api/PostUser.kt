@@ -13,8 +13,8 @@ import java.io.IOException
  * Uses OkHttp for the API call.
  *
  * @param user User object that will be sent to the backend.
- * @param onSuccess Callback lambda invoked on success.
- * @param onFailure Callback lambda invoked when encountering an error.
+ * @param onSuccess Callback lambda invoked on success of the POST request.
+ * @param onFailure Callback lambda invoked when encountering an error with the POST request.
  */
 fun postUser(user: User, onSuccess: () -> Unit, onFailure: () -> Unit) {
     val url = "https://dummyjson.com/users/add"

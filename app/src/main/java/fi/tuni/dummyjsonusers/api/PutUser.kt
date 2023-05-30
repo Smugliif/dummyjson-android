@@ -12,8 +12,8 @@ import java.io.IOException
  * Uses OkHttp for the API call.
  *
  * @param user Modified user object.
- * @param onSuccess Callback lambda invoked on success.
- * @param onFailure Callback lambda invoked when encountering an error.
+ * @param onSuccess Callback lambda invoked on success of PUT request.
+ * @param onFailure Callback lambda invoked when encountering an error with the PUT request.
  */
 fun putUser(user: User, onSuccess: () -> Unit, onFailure: () -> Unit) {
     val url = "https://dummyjson.com/users/${user.id}"
